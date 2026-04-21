@@ -9,9 +9,9 @@
 
 'use strict';
 
-const SUPABASE_URL      = 'https://pwfaqfghkrsnitisljlb.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3ZmFxZmdoa3Jzbml0aXNsamxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMjQzODcsImV4cCI6MjA4OTkwMDM4N30.16Cv4pq4e9OhY0rfbcVnnAJViTRf1xlbPVL70gM_JWA';
-
+// Load from window globals (injected by index.html at runtime)
+   const SUPABASE_URL      = window.__SUPABASE_URL__ || '';
+   const SUPABASE_ANON_KEY = window.__SUPABASE_ANON_KEY__ || '';
 // ── HELPERS ───────────────────────────────────────────────────
 function isConfigured() {
   return SUPABASE_URL !== 'YOUR_SUPABASE_URL' &&

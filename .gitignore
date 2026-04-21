@@ -1,0 +1,30 @@
+# Environment variables - NEVER commit these to Git!
+.env
+.env.local
+.env.*.local
+.env.production.local
+
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs (if using any build tool)
+dist/
+build/
+.next/
+
+# Logs
+logs/
+*.log

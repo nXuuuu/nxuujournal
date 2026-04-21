@@ -150,248 +150,163 @@
           <span>Team</span>
         </button>
         <button class="tab-btn" data-tab="settings" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M15 8h-2M3 8H1M13.1 2.9l-1.4 1.4M4.3 12.7l-1.4 1.4M13.1 13.1l-1.4-1.4M4.3 3.3l-1.4-1.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           <span>Settings</span>
         </button>
       </nav>
 
-      <main class="tab-content">
+      <main class="app-content">
 
         <!-- ════ CHECKLIST ════ -->
         <div class="tab-pane active" id="tab-checklist">
           <div class="pane-inner">
-            <div class="prog">
-              <div class="prog-num" id="prog-big">0<span> / 0</span></div>
-              <div class="prog-right">
-                <div class="prog-label">Checklist Progress</div>
-                <div class="prog-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10">
-                  <div class="prog-fill" id="fill"></div>
-                </div>
-              </div>
-            </div>
-            <div class="complete-banner" id="complete-banner">
-              <div class="complete-banner-icon">✦</div>
-              <div>
-                <div class="complete-banner-text">Checklist complete — ready to trade.</div>
-                <div class="complete-banner-sub">Log your trade after execution.</div>
-              </div>
-            </div>
-            <div id="checklist-steps-wrap"></div>
-            <div class="checklist-footer">
-              <button class="reset-btn" id="resetBtn" type="button">↺ Reset</button>
-            </div>
+            <div id="checklist-container"></div>
           </div>
         </div>
 
         <!-- ════ LOG ════ -->
         <div class="tab-pane" id="tab-log">
           <div class="pane-inner">
+
             <div class="card">
               <div class="card-hd">
-                <h3 class="card-title">Log a Trade</h3>
-                <div class="db-status">
-                  <span class="db-dot connected"></span>
-                  <span class="db-text">Connected</span>
-                </div>
+                <h3 class="card-title">New Trade</h3>
               </div>
-              <div class="form-grid">
+              <div class="card-body">
+
+                <!-- Symbol -->
                 <div class="form-group">
-                  <label class="form-label">Date</label>
-                  <input class="form-input" type="date" id="f-date" />
+                  <label class="form-label">Symbol</label>
+                  <input class="form-input" type="text" id="log-symbol" placeholder="e.g. AAPL, EURUSD" />
                 </div>
+
+                <!-- Type -->
                 <div class="form-group">
-                  <label class="form-label">Session</label>
-                  <select class="form-input" id="f-session">
-                    <option value="">Select...</option>
-                    <option value="asian">Asian</option>
-                    <option value="london">London</option>
-                    <option value="ny">New York</option>
+                  <label class="form-label">Type</label>
+                  <select class="form-input" id="log-type">
+                    <option value="LONG">LONG</option>
+                    <option value="SHORT">SHORT</option>
                   </select>
                 </div>
+
+                <!-- Entry Price -->
                 <div class="form-group">
-                  <label class="form-label">Model</label>
-                  <select class="form-input" id="f-model"></select>
+                  <label class="form-label">Entry Price</label>
+                  <input class="form-input" type="number" id="log-entry" placeholder="0.00" step="0.01" />
                 </div>
+
+                <!-- Exit Price -->
                 <div class="form-group">
-                  <label class="form-label">Result</label>
-                  <div class="result-btns" id="f-result">
-                    <button class="result-btn win"  data-value="win"  type="button">Win</button>
-                    <button class="result-btn loss" data-value="loss" type="button">Loss</button>
-                    <button class="result-btn be"   data-value="be"   type="button">BE</button>
-                  </div>
+                  <label class="form-label">Exit Price</label>
+                  <input class="form-input" type="number" id="log-exit" placeholder="0.00" step="0.01" />
                 </div>
+
+                <!-- Quantity -->
                 <div class="form-group">
-                  <label class="form-label">R Value <span class="form-hint">(e.g. 2.0 or -1.0)</span></label>
-                  <input class="form-input" type="number" id="f-r" step="0.1" placeholder="0.0" />
+                  <label class="form-label">Quantity</label>
+                  <input class="form-input" type="number" id="log-qty" placeholder="0.00" step="0.01" />
                 </div>
+
+                <!-- PnL -->
                 <div class="form-group">
-                  <label class="form-label">PnL (USD) <span class="form-hint">(e.g. 120 or -60)</span></label>
-                  <input class="form-input" type="number" id="f-pnl" step="0.01" placeholder="0.00" />
+                  <label class="form-label">PnL</label>
+                  <div class="pnl-display" id="log-pnl-display">$0.00</div>
                 </div>
-                <div class="form-group form-group--full">
-                  <label class="form-label">Notes</label>
-                  <textarea class="form-input form-textarea" id="f-notes" placeholder="What happened? Why did you take this trade?" rows="3"></textarea>
+
+                <!-- Date -->
+                <div class="form-group">
+                  <label class="form-label">Date</label>
+                  <input class="form-input" type="date" id="log-date" />
                 </div>
-                <div class="form-group form-group--full">
-                  <label class="form-label">Account <span class="form-hint">(e.g. FTMO, Personal, Challenge)</span></label>
-                  <input class="form-input" type="text" id="f-account" placeholder="Leave blank if only one account" />
+
+                <!-- Model (optional) -->
+                <div class="form-group">
+                  <label class="form-label">Model <span class="form-hint">(optional)</span></label>
+                  <select class="form-input" id="log-model">
+                    <option value="">Select model...</option>
+                  </select>
                 </div>
+
+                <!-- Session (optional) -->
+                <div class="form-group">
+                  <label class="form-label">Session <span class="form-hint">(optional)</span></label>
+                  <input class="form-input" type="text" id="log-session" placeholder="e.g. EU, NY" />
+                </div>
+
+                <!-- Account (optional) -->
+                <div class="form-group">
+                  <label class="form-label">Account <span class="form-hint">(optional)</span></label>
+                  <input class="form-input" type="text" id="log-account" placeholder="e.g. Demo, Live" />
+                </div>
+
+                <!-- Notes (optional) -->
+                <div class="form-group">
+                  <label class="form-label">Notes <span class="form-hint">(optional)</span></label>
+                  <textarea class="form-input" id="log-notes" placeholder="Trade notes..." style="height:80px;resize:vertical;"></textarea>
+                </div>
+
+                <button class="add-btn" onclick="addTrade()">+ Log Trade</button>
               </div>
-              <button class="submit-btn" id="submitBtn" type="button"><span id="submit-text">Save Trade</span></button>
-              <div class="form-msg" id="form-msg"></div>
             </div>
 
-            <div class="card" style="margin-top:14px;">
-              <div class="card-hd">
-                <h3 class="card-title">Trade History</h3>
-                <button class="text-btn" id="refreshBtn" type="button">↻ Refresh</button>
-              </div>
-              <!-- Filter bar -->
-              <div class="filter-bar" id="filter-bar">
-                <select class="filter-select" id="fil-result" onchange="applyFilters()">
-                  <option value="">All Results</option>
-                  <option value="win">Win</option>
-                  <option value="loss">Loss</option>
-                  <option value="be">BE</option>
-                </select>
-                <select class="filter-select" id="fil-session" onchange="applyFilters()">
-                  <option value="">All Sessions</option>
-                  <option value="asian">Asian</option>
-                  <option value="london">London</option>
-                  <option value="ny">New York</option>
-                </select>
-                <select class="filter-select" id="fil-model" onchange="applyFilters()">
-                  <option value="">All Models</option>
-                </select>
-                <input class="filter-input-date" type="text" id="fil-account" oninput="applyFilters()" placeholder="Account..." style="max-width:100px;" />
-                <input class="filter-input-date" type="date" id="fil-from" onchange="applyFilters()" title="From date" />
-                <input class="filter-input-date" type="date" id="fil-to"   onchange="applyFilters()" title="To date" />
-                <button class="filter-clear-btn" onclick="clearFilters()" type="button">✕ Clear</button>
-                <span class="filter-count" id="filter-count"></span>
-              </div>
-              <div id="trade-list"><div class="loading-state">Loading trades...</div></div>
+            <!-- Recent Trades -->
+            <div class="card" style="margin-top:12px;">
+              <div class="card-hd"><h3 class="card-title">Recent Trades</h3></div>
+              <div id="recent-trades"><div class="loading-state">Loading...</div></div>
             </div>
+
           </div>
         </div>
 
         <!-- ════ CALENDAR ════ -->
         <div class="tab-pane" id="tab-calendar">
           <div class="pane-inner">
-            <div class="cal-header">
-              <button class="cal-nav" id="cal-prev" type="button">←</button>
-              <h3 class="cal-month" id="cal-month-label"></h3>
-              <button class="cal-nav" id="cal-next" type="button">→</button>
+            <div class="calendar-nav">
+              <button class="text-btn" onclick="prevMonth()" type="button">← Prev</button>
+              <span id="calendar-month-year"></span>
+              <button class="text-btn" onclick="nextMonth()" type="button">Next →</button>
             </div>
-            <div class="cal-summary" id="cal-summary">
-              <div class="cal-stat"><div class="cal-stat-val" id="cal-pnl">—</div><div class="cal-stat-lbl">Monthly $</div></div>
-              <div class="cal-stat"><div class="cal-stat-val" id="cal-trades">—</div><div class="cal-stat-lbl">Trades</div></div>
-              <div class="cal-stat"><div class="cal-stat-val" id="cal-wr">—</div><div class="cal-stat-lbl">Win Rate</div></div>
-            </div>
-            <div class="cal-grid" id="cal-grid"></div>
-            <div class="cal-legend">
-              <span class="legend-item"><span class="legend-dot win"></span>Profit</span>
-              <span class="legend-item"><span class="legend-dot loss"></span>Loss</span>
-              <span class="legend-item"><span class="legend-dot be"></span>BE</span>
-              <span class="legend-item"><span class="legend-dot none"></span>No trade</span>
-            </div>
+            <div id="calendar-container"></div>
           </div>
         </div>
 
         <!-- ════ EQUITY ════ -->
         <div class="tab-pane" id="tab-equity">
           <div class="pane-inner">
-            <div class="equity-stat-group">
-              <div class="equity-stat"><div class="equity-stat-val" id="eq-total">—</div><div class="equity-stat-lbl">Total PnL</div></div>
-              <div class="equity-stat"><div class="equity-stat-val" id="eq-best">—</div><div class="equity-stat-lbl">Best Trade</div></div>
-              <div class="equity-stat"><div class="equity-stat-val" id="eq-worst">—</div><div class="equity-stat-lbl">Worst Trade</div></div>
-              <div class="equity-stat"><div class="equity-stat-val" id="eq-dd">—</div><div class="equity-stat-lbl">Max Drawdown</div></div>
+            <div class="card">
+              <div class="card-hd"><h3 class="card-title">Equity Curve</h3></div>
+              <canvas id="equity-chart" style="max-height:300px;"></canvas>
             </div>
-            <div class="chart-wrap">
-              <canvas id="equity-chart"></canvas>
-              <div class="chart-empty" id="equity-empty">No trades yet — log your first trade to see your equity curve.</div>
+            <div class="card" style="margin-top:12px;">
+              <div class="card-hd"><h3 class="card-title">By Month</h3></div>
+              <canvas id="monthly-chart" style="max-height:300px;"></canvas>
             </div>
           </div>
         </div>
 
-        <!-- ════ STATS / DASHBOARD ════ -->
+        <!-- ════ STATS ════ -->
         <div class="tab-pane" id="tab-stats">
           <div class="pane-inner">
 
-            <!-- Hero row: Net PnL · Win Rate · Profit Factor -->
-            <div class="dash-hero">
-              <div class="dash-hero-card dash-hero-pnl">
-                <div class="dash-hero-label">Net P&amp;L</div>
-                <div class="dash-hero-val" id="st-totalpnl">—</div>
-                <div class="dash-hero-sub" id="st-tradecnt">— trades</div>
-              </div>
-              <div class="dash-hero-card dash-hero-wr">
-                <div class="dash-hero-label">Win Rate</div>
-                <div class="dash-hero-val" id="st-wr">—</div>
-                <div class="dash-hero-sub" id="st-wl-sub">— W · — L</div>
-              </div>
-              <div class="dash-hero-card dash-hero-pf">
-                <div class="dash-hero-label">Profit Factor</div>
-                <div class="dash-hero-val" id="st-pf">—</div>
-                <div class="dash-hero-sub">gross W ÷ L</div>
-              </div>
-            </div>
-
-            <!-- Secondary 8-metric grid -->
-            <div class="dash-metrics-grid">
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-green">↑</div>
-                <div class="dash-metric-val win-col" id="st-avgwin">—</div>
-                <div class="dash-metric-lbl">Avg Win</div>
-              </div>
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-red">↓</div>
-                <div class="dash-metric-val loss-col" id="st-avgloss">—</div>
-                <div class="dash-metric-lbl">Avg Loss</div>
-              </div>
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-blue">⇄</div>
-                <div class="dash-metric-val" id="st-rr">—</div>
-                <div class="dash-metric-lbl">R:R Ratio</div>
-              </div>
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-purple">μ</div>
-                <div class="dash-metric-val" id="st-exp">—</div>
-                <div class="dash-metric-lbl">Expectancy</div>
-              </div>
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-green">🔥</div>
-                <div class="dash-metric-val win-col" id="st-beststreak">—</div>
-                <div class="dash-metric-lbl">Best Streak</div>
-              </div>
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-red">❄</div>
-                <div class="dash-metric-val loss-col" id="st-worststreak">—</div>
-                <div class="dash-metric-lbl">Worst Streak</div>
-              </div>
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-amber">R</div>
-                <div class="dash-metric-val" id="st-avgr">—</div>
-                <div class="dash-metric-lbl">Avg R</div>
-              </div>
-              <div class="dash-metric-card">
-                <div class="dash-metric-icon dash-icon-amber">#</div>
-                <div class="dash-metric-val" id="st-total">—</div>
-                <div class="dash-metric-lbl">Total Trades</div>
-              </div>
-            </div>
-
-            <!-- Cumulative Performance chart -->
-            <div class="card" style="margin-top:14px;">
-              <div class="card-hd">
-                <h3 class="card-title">Cumulative Performance</h3>
-                <div class="dash-chart-toggle">
-                  <button class="dash-toggle-btn active" id="stats-toggle-usd" onclick="switchStatsChart('usd')" type="button">$</button>
-                  <button class="dash-toggle-btn" id="stats-toggle-r" onclick="switchStatsChart('r')" type="button">R</button>
+            <!-- Summary Stats -->
+            <div class="card">
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-label">Total Trades</div>
+                  <div class="stat-value" id="stat-total-trades">0</div>
                 </div>
-              </div>
-              <div class="stats-chart-wrap">
-                <canvas id="stats-cumulative-chart"></canvas>
-                <div class="chart-empty" id="stats-chart-empty" style="display:none;">No trades yet.</div>
+                <div class="stat-item">
+                  <div class="stat-label">Win Rate</div>
+                  <div class="stat-value" id="stat-win-rate">0%</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-label">Total PnL</div>
+                  <div class="stat-value" id="stat-total-pnl">$0.00</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-label">Account Growth</div>
+                  <div class="stat-value" id="stat-account-growth">0%</div>
+                </div>
               </div>
             </div>
 
@@ -542,20 +457,20 @@
     </div>
 
     <!-- Inject Supabase environment variables at runtime -->
-   <script>
-     (function() {
-       window.__SUPABASE_URL__ = '{VITE_SUPABASE_URL}';
-       window.__SUPABASE_ANON_KEY__ = '{VITE_SUPABASE_ANON_KEY}';
-       
-       if (!window.__SUPABASE_URL__ || window.__SUPABASE_URL__ === '{VITE_SUPABASE_URL}') {
-         console.warn('⚠️ VITE_SUPABASE_URL is not set in environment');
-       }
-       if (!window.__SUPABASE_ANON_KEY__ || window.__SUPABASE_ANON_KEY__ === '{VITE_SUPABASE_ANON_KEY}') {
-         console.warn('⚠️ VITE_SUPABASE_ANON_KEY is not set in environment');
-       }
-     })();
-   </script>
-    
+    <script>
+      (function() {
+        window.__SUPABASE_URL__ = '{VITE_SUPABASE_URL}';
+        window.__SUPABASE_ANON_KEY__ = '{VITE_SUPABASE_ANON_KEY}';
+        
+        if (!window.__SUPABASE_URL__ || window.__SUPABASE_URL__ === '{VITE_SUPABASE_URL}') {
+          console.warn('⚠️ VITE_SUPABASE_URL is not set in environment');
+        }
+        if (!window.__SUPABASE_ANON_KEY__ || window.__SUPABASE_ANON_KEY__ === '{VITE_SUPABASE_ANON_KEY}') {
+          console.warn('⚠️ VITE_SUPABASE_ANON_KEY is not set in environment');
+        }
+      })();
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script src="js/supabase.js"></script>
     <script src="js/app.js"></script>

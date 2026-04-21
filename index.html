@@ -541,6 +541,21 @@
       </main>
     </div>
 
+    <!-- Inject Supabase environment variables at runtime -->
+   <script>
+     (function() {
+       window.__SUPABASE_URL__ = '{VITE_SUPABASE_URL}';
+       window.__SUPABASE_ANON_KEY__ = '{VITE_SUPABASE_ANON_KEY}';
+       
+       if (!window.__SUPABASE_URL__ || window.__SUPABASE_URL__ === '{VITE_SUPABASE_URL}') {
+         console.warn('⚠️ VITE_SUPABASE_URL is not set in environment');
+       }
+       if (!window.__SUPABASE_ANON_KEY__ || window.__SUPABASE_ANON_KEY__ === '{VITE_SUPABASE_ANON_KEY}') {
+         console.warn('⚠️ VITE_SUPABASE_ANON_KEY is not set in environment');
+       }
+     })();
+   </script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script src="js/supabase.js"></script>
     <script src="js/app.js"></script>
